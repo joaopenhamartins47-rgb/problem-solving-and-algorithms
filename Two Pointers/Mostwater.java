@@ -1,32 +1,31 @@
 class Solution {
     public int maxArea(int[] heights) {
-        int maior = 0, wid = 0, atual=0;
-        int left = 0, right = heights.length-1, menor = 0;
-        while(right > left)
-        {
-            if(heights[left] < heights[right])
-                menor = heights[left];
-            else
-                menor = heights[right];
-            wid = right-left;
-            atual = menor*wid;
-            if(atual > maior)
-                maior = atual;
+        int maior = 0;
+        int left = 0, right = heights.length - 1;
 
-            if(heights[left] > heights[right])
-                right--;
-            else if(heights[left] < heights[right])
-                left++;
-            else
-            {
-                left++;
-                right--;
+        while (left < right) {
+            int hLeft = heights[left];
+            int hRight = heights[right];
+
+            int menor = hLeft < hRight ? hLeft : hRight; 
+            int atual = menor * (right - left);
+            
+            if (atual > maior) {
+                maior = atual;
             }
 
+            while (left < right && heights[left] <= menor) {
+                left++;
+            }
+            while (left < right && heights[right] <= menor) {
+                right--;
+            }
         }
+        
         return maior;
     }
 }
+
 
 class Mostwater{
     public static void main(String[] args){
